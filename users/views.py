@@ -3,6 +3,7 @@ from django.contrib import messages
 from .models import User
 from .forms import LoginForm
 
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
