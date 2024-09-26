@@ -99,6 +99,9 @@
                     </div>
                   </div>
                   <li class="nav-item">
+                    <a class="nav-link ms-3 mt-2" aria-current="page" href="#"><i class="bi bi-gear"></i> Configurações</a>
+                  </li>
+                  <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="nav-link mt-3 ms-3 btn btn-link" style="padding: 0; border: none; color: inherit;">
