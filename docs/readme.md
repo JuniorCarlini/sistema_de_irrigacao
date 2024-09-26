@@ -13,6 +13,17 @@ Este é um aplicativo Django para armazenar dados de sensores e exibir um dashbo
 - SQLite 
 - HTML/CSS/JavaScript para o frontend
 
+## Diagrama Elétrico
+
+
+![
+Diagrama Elétrico](docs/image/eletrical_diagram.jpg)
+
+
+- Django
+- SQLite 
+- HTML/CSS/JavaScript para o frontend
+
 ## Instalação
 
 1. Clone o repositório:
