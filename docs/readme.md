@@ -17,7 +17,7 @@ Este é um aplicativo Django para armazenar dados de sensores e exibir um dashbo
 
 
 ![
-Diagrama Elétrico](image/eletrical_diagram.jpg)
+Diagrama Elétrico](image/electrical_diagram.jpg)
 
 
 - Django
