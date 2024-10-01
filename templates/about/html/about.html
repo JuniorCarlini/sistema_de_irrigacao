@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydric | Sobre</title>
+    <link rel="shortcut icon" href="{% static '/icons/favicon.svg' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .logo {
+            width: 190px;
+            height: auto;
+        }
+        .icon-user {
+            height: 70px;
+            width: 70px;
+        }
+        .text-justify {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Logo do Projeto -->
+        <div class="text-center mb-4">
+            <img src="{% static '/icons/logo_icon.svg' %}" alt="Logo do Hydric" class="img-fluid" style="max-width: 200px;">
+        </div>
+
+        <h1 class="text-center mb-4">Hydric - Sistema de Irrigação</h1>
+        
+        <div class="row">
+            <div class="col-md-12 mb-4 text-justify">
+                <p>O Hydric é um sistema de irrigação automática projetado para otimizar o uso de água em plantações, jardins e outras áreas que necessitam de irrigação controlada. Utilizando a ESP32 como controladora e um backend feito em Django, o Hydric possibilita monitoramento e controle precisos dos níveis de umidade do solo, ativando automaticamente as válvulas de irrigação quando necessário. A ideia do projeto é reduzir desperdícios e facilitar o gerenciamento de recursos hídricos, contribuindo com práticas sustentáveis na agricultura.</p>
+            </div>
+        </div>
+         
+        <!-- Primeira Linha de Participantes -->
+        <div class="row">
+            <h2 class="text-center mb-5">Equipe do Projeto</h2>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/10272669?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Miguel Zamberlan</h6>
+                <p class="mb-1">Professor Orientador</p>
+                <a href="https://github.com/miguelzamberlan" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/116855041?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Junior Carlini</h6>
+                <p class="mb-1">Desenvolvimento</p>
+                <a href="https://github.com/JuniorCarlini" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/144291796?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Ronis Daniel</h6>
+                <p class="mb-1">Desenvolvimento</p>
+                <a href="https://github.com/ronys69" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/133825285?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Raiani Fantichelli</h6>
+                <p class="mb-1">Pesquisa e Requisitos do Sistema</p>
+                <a href="https://github.com/raifantichelli" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+
+        </div>
+        <br>
+        <!-- Segunda Linha de Participantes -->
+        <div class="row  pt-5 pb-5" >
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/183447743?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Thaís Schardosin</h6>
+                <p class="mb-1">Pesquisa e Requisitos do Sistema</p>
+                <a href="https://github.com/JuniorCarlini" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/127909559?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Felipe Schuster</h6>
+                <p class="mb-1">Arquitetura de Hardware</p>
+                <a href="https://github.com/Felipe-Schuster" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/183447743?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Ronaldo do Carmo</h6>
+                <p class="mb-1">Arquitetura de Hardware</p>
+                <a href="https://github.com/RonaCarmo" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/183447659?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Meire Oliveira</h6>
+                <p class="mb-1">Documentação</p>
+                <a href="https://github.com/Meire-Oliveira" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+
+        </div>
+        <!-- Terceira Linha de Participantes -->
+        <div class="row  pt-5 pb-5" >
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/183447743?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Josi</h6>
+                <p class="mb-1">Documentação</p>
+                <a href="https://github.com/JuniorCarlini" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+            <div class="col-md-3 text-center ">
+                <img src="https://avatars.githubusercontent.com/u/183447743?v=4" class="img-fluid rounded-circle icon-user m-0" alt="Junior Carlini">
+                <h6 class="fw-bold m-0">Ana Paula</h6>
+                <p class="mb-1">Testes e Calibração</p>
+                <a href="https://github.com/Felipe-Schuster" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
