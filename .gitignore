@@ -41,8 +41,6 @@ wheels/
 .idea/
 
 # Media and static files
-/staticfiles
-/media
 
 # Celery stuff
 celerybeat-schedule
