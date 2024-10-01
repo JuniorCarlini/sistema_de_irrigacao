@@ -16,3 +16,7 @@ def login_view(request):
             messages.error(request, 'Usuário ou senha inválidos.')
 
     return render(request, 'users/html/login.html')
+
+
+def about_view(request):
+    return render(request, 'about/html/about.html')
