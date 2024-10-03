@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('about/', about_view , name='about'),
     path('', include('dashboard.urls')),
+    path('', include('sensors.urls')),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
 
