@@ -1,0 +1,66 @@
+{% load static %}
+<nav class="navbar navbar-color">
+    <div class="container-fluid">
+        <a href="/">
+            <img class="ms-5 logo" src="{% static '/icons/logo_icon_branco.svg' %}" alt="logo">
+        </a>
+        <button type="button" class="btn btn-primary btn-lg  me-5" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation"><i class="bi bi-list"></i></button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close ms-2 mt-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" aria-current="page" href="/"><i class="bi bi-bar-chart-line"></i> Dashboard</a>
+                    </li>
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <span><i class="bi bi-clock-history"></i> Histórico</span>
+                                </button>
+                            </h2>
+                            <div class="ms-3">
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <a href="/temperature-chart/"><i class="bi bi-thermometer-low"></i> Sensor Temperatura do Ar</a>
+                                    </div>
+                                </div>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <a href="/air-humidity-chart/"><i class="bi bi-thermometer-low"></i> Sensor Umidade do Ar</a>
+                                    </div>
+                                </div>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <a href="/soil-humidity-chart/"><i class="bi bi-thermometer-low"></i> Sensor Umidade do Solo</a>
+                                    </div>
+                                </div>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <a href="/water-usage/"><i class="bi bi-droplet"></i> Uso Diario de Água</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link ms-3 mt-2" aria-current="page" href="/configuration/"><i class="bi bi-gear"></i> Configurações</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ms-3 mt-2" aria-current="page" href="/about/"><i class="bi bi-question-circle"></i> Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link mt-3 ms-3 btn btn-link" style="padding: 0; border: none; color: inherit;">
+                                    <i class="bi bi-box-arrow-right"></i> Sair
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
