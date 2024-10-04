@@ -164,7 +164,7 @@ def water_usage_view(request):
         water_usages = WaterUsage.objects.all().order_by('-timestamp')[:20]
 
     # Extraindo dados
-    water_usage_data = [usage.water_used for usage in water_usages]
+    water_usage_data = [round(usage.water_used, 2) for usage in water_usages]
     labels = [timezone.localtime(usage.timestamp).strftime('%d-%m-%Y %H:%M') for usage in water_usages]
 
     context = {
