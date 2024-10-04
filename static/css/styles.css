@@ -1,0 +1,69 @@
+body {
+    background-color: rgb(247, 248, 251);
+}
+
+.logo {
+    margin: 10px;
+    width: 100px;
+    height: auto;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 400px;
+}
+
+.navbar {
+background: linear-gradient(to right, #06509e, #63a4ff);
+}
+
+a {
+text-decoration: none;
+color: inherit;
+}
+
+a:hover {
+text-decoration: none; 
+color: inherit;
+}
+
+a:visited {
+text-decoration: none;
+color: inherit;
+}
+
+a:active {
+text-decoration: none;
+color: inherit;
+}
+
+.text-color-primary {
+    color: #16365f;
+}
+
+.text-color-secondary {
+    color: #6b859e;
+}
+
+.row-style {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.container-style {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
