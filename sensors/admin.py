@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import SolenoidState, DataCollection
+from .models import SolenoidState, DataCollection, FlowRate, WaterUsage
 
 admin.site.register(SolenoidState)
 admin.site.register(DataCollection)
+admin.site.register(FlowRate)
+admin.site.register(WaterUsage)
