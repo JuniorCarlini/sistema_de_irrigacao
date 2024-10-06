@@ -18,12 +18,13 @@
         <form method="post">
             {% csrf_token %}
             <div class="row row-style mb-3 d-flex justify-content-between align-items-center">
-                <div class="col-12 col-sm-6 col-md-3 mb-2">
+                <div class="">
                     <label for="flow-rate" class="form-label m-0 text-color-secondary">Taxa de Fluxo (L/min):</label>
                     <input type="number" step="0.01" id="flow-rate" name="flow_rate" class="form-control w-100" placeholder="{{ flow_rate.rate }}" required>
+                    <p class="text-center text-color-secondary mt-4">Nesse campo, deve ser inserido o valor da vazão em litros de água por minuto.</p>
                 </div>
                 <div class="col-12 mt-2 mb-2">
-                    <button type="submit" class="btn w-100 btn-primary"><i class="bi bi-save"></i> Salvar</button>
+                    <button type="submit" class="btn w-100 btn-primary"><i class="bi bi-save"></i> Atualizar Taxa de Fluxo</button>
                 </div>
             </div>
         </form>
