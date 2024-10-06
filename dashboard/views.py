@@ -1,10 +1,36 @@
 from sensors.models import FlowRate
 from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.utils import timezone
+from sensors.models import WaterUsage, DataCollection
+from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard_view(request):
     return render(request, 'dashboard/html/dashboard.html')
+
+@login_required
+def get_water_usage_data(request):
+    water_usages = WaterUsage.objects.all().order_by('-timestamp')[:10]  # Últimos 10 registros
+    data = {
+        'labels': [usage.timestamp.strftime('%d-%m-%Y %H:%M') for usage in water_usages],
+        'water_used': [round(usage.water_used, 2) for usage in water_usages],
+    }
+    return JsonResponse(data)
+    print(data)
+
+@login_required
+def get_data_collection_data(request):
+    latest_data = DataCollection.objects.latest('timestamp')
+    data = {
+        'temperature': round(latest_data.temperature, 2),
+        'air_humidity': round(latest_data.air_humidity, 2),
+        'soil_humidity': round(latest_data.soil_humidity, 2),
+    }
+    return JsonResponse(data)
+
 
 @login_required
 def configuration_view(request):
