@@ -1,19 +1,13 @@
-echo "BUILD START"
+echo " BUILD START"
 
-# create a virtual environment named 'venv' if it doesn't already exist
-python3.10 -m venv venv
+python3.9 --version
+python3.9 -m ensurepip # não aparece nos tutoriais internacionais
+python3.9 -m pip install -r requirements.txt
 
-# activate the virtual environment
-source venv/bin/activate
+echo " MAKE MIGRATIONS..."
+python3.9 manage.py makemigrations --noinput
+python3.9 manage.py migrate --noinput
 
-# install all deps in the venv
-pip install -r requirements.txt
 
-# install database migrations
-python manage.py makemigrations --noinput
-python manage.py migrate --noinput
-
-# collect static files using the Python interpreter from venv
-python manage.py collectstatic --noinput
-
-echo "BUILD END"
+python3.9 manage.py collectstatic --noinput --clear
+echo " BUILD END"
