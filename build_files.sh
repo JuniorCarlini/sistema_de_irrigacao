@@ -1,5 +1,5 @@
 echo "Instalando pacotes"
-pip install -r requirements.txt
+python3 pip install -r requirements.txt
 
 echo "Criando banco de dados"
 python3 manage.py makemigrations --noinput
