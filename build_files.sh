@@ -1,5 +1,3 @@
-# build_files.sh
-
 echo "Instalando pacotes"
 pip install -r requirements.txt
 
