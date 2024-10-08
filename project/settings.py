@@ -116,11 +116,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
     
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -132,3 +132,29 @@ LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_USER_MODEL = 'users.User'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+# Configurações AWS/Cloudflare
+AWS_STORAGE_BUCKET_NAME = 'sistema-de-irrigacao'
+AWS_S3_ENDPOINT_URL = 'https://2d4b07d6dde3d5f5e3383a87dd3098da.r2.cloudflarestorage.com'
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_SECRET_ACCESS_KEY"),
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID"),
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_ACL = None
+
+# Configurações de produção
+if not DEBUG:
+    STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Necessário para `collectstatic`
+
+# Configurações de desenvolvimento (local)
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
