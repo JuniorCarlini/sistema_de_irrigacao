@@ -2,7 +2,9 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
+from dotenv import dotenv_values
 load_dotenv()
+config = dotenv_values(".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,11 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = config['DEBUG']
 
 ALLOWED_HOSTS = ['127.0.0.1','.vercel.app','192.168.52.215','192.168.3.52']
 
@@ -112,18 +114,31 @@ USE_I18N = True
 
 USE_TZ = True
 
+#AWS S3 settings
+# Using S3 to store static files
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-    
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+# AWS S3 settings
+AWS_STORAGE_BUCKET_NAME = config['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_ENDPOINT_URL = config['AWS_S3_ENDPOINT_URL']
+AWS_ACCESS_KEY_ID = config['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = config['AWS_SECRET_ACCESS_KEY']
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+# STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
+STATIC_URL = "/static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Base url to serve media files
+MEDIA_URL = '/media/'
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -132,29 +147,3 @@ LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_USER_MODEL = 'users.User'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-# Configurações AWS/Cloudflare
-AWS_STORAGE_BUCKET_NAME = 'sistema-de-irrigacao'
-AWS_S3_ENDPOINT_URL = 'https://2d4b07d6dde3d5f5e3383a87dd3098da.r2.cloudflarestorage.com'
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_SECRET_ACCESS_KEY"),
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID"),
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_DEFAULT_ACL = None
-
-# Configurações de produção
-if not DEBUG:
-    STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/'
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Necessário para `collectstatic`
-
-# Configurações de desenvolvimento (local)
-else:
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
-    ]
