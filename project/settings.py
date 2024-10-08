@@ -2,9 +2,8 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
-from dotenv import dotenv_values
-load_dotenv()
-config = dotenv_values(".env")
+from decouple import config
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,11 +13,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = config['SECRET_KEY']
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config['DEBUG']
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1','.vercel.app','192.168.52.215','192.168.3.52']
 
@@ -120,10 +119,11 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATIC_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # AWS S3 settings
-AWS_STORAGE_BUCKET_NAME = config['AWS_STORAGE_BUCKET_NAME']
-AWS_S3_ENDPOINT_URL = config['AWS_S3_ENDPOINT_URL']
-AWS_ACCESS_KEY_ID = config['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = config['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+
 
 # STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
 STATIC_URL = "/static/"
