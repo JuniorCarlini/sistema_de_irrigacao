@@ -44,6 +44,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "project.urls"
@@ -113,32 +114,19 @@ USE_I18N = True
 
 USE_TZ = True
 
-#AWS S3 settings
-# Using S3 to store static files
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATIC_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Static files (CSS, JavaScript, Images)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-# AWS S3 settings
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+STATIC_URL = 'static/'
+# STATICFILES_DIRES = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATIC_ROOT = BASE_DIR / "static"
 
-
-# STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
-STATIC_URL = "/static/"
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Base url to serve media files
+MEDIA_ROOT = BASE_DIR/ 'uploads'
 MEDIA_URL = '/media/'
-# Path where media is stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+# Default primary key field type
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
