@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class FlowRate(models.Model):
-    rate = models.FloatField()  # Taxa de fluxo em litros por minuto
+    rate = models.FloatField()
 
     def __str__(self):
         return f"Flow rate: {self.rate} L/min"
@@ -57,3 +57,9 @@ class DataCollection(models.Model):
 
     def __str__(self):
         return f"Data: Temp={self.temperature}, Air Humidity={self.air_humidity}, Soil Humidity={self.soil_humidity}"
+
+class Configuracao(models.Model):
+    token = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"Configuração: {self.token}"
