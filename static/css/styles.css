@@ -106,3 +106,7 @@ a:active {
     margin-top: 65px;
     margin-bottom: -2px;
 }
+.toast-icon {
+    width: 25px;
+    height: 25px;
+}
