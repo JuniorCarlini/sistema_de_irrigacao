@@ -1,11 +1,9 @@
-from sensors.models import FlowRate
+import secrets
+from django.utils import timezone
+from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.utils import timezone
-from sensors.models import WaterUsage, DataCollection
-from django.contrib.auth.decorators import login_required
+from sensors.models import WaterUsage, DataCollection , FlowRate , Configuracao
 
 @login_required
 def dashboard_view(request):
@@ -31,20 +29,28 @@ def get_data_collection_data(request):
     }
     return JsonResponse(data)
 
-
 @login_required
 def configuration_view(request):
-    # Busca ou cria uma instância de FlowRate, garantindo que sempre exista uma
     flow_rate_instance, created = FlowRate.objects.get_or_create(id=1, defaults={'rate': 0.0})
+    configuracao_instance, created = Configuracao.objects.get_or_create(id=1, defaults={'token': ''})
 
     if request.method == 'POST':
-        # Obtém a nova taxa de fluxo do formulário
-        new_rate = request.POST.get('flow_rate')
+        # Atualização da taxa de fluxo
+        if 'flow_rate' in request.POST:
+            new_rate = request.POST.get('flow_rate')
+            flow_rate_instance.rate = float(new_rate)
+            flow_rate_instance.save()
 
-        # Atualiza a taxa de fluxo com o valor submetido
-        flow_rate_instance.rate = float(new_rate)
-        flow_rate_instance.save()
+        # Geração de novo token
+        if 'generate_token' in request.POST:
+            # Gera um novo token e salva na instância de configuração
+            new_token = secrets.token_hex(16)  # Gera um token aleatório de 32 caracteres hexadecimais
+            configuracao_instance.token = new_token
+            configuracao_instance.save()
 
         return redirect('configuration')  # Redireciona para evitar o reenvio do formulário
-    print(flow_rate_instance)
-    return render(request, 'configuration/html/configuration.html', {'flow_rate': flow_rate_instance})
+
+    return render(request, 'configuration/html/configuration.html', {
+        'flow_rate': flow_rate_instance,
+        'configuracao': configuracao_instance
+    })
