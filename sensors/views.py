@@ -2,31 +2,31 @@ from datetime import timedelta
 from rest_framework import status
 from django.utils import timezone
 from django.shortcuts import render
+from .decorators import token_required
 from rest_framework.response import Response
 from django.http import HttpResponseBadRequest
 from rest_framework.decorators import api_view
-from .models import DataCollection, SolenoidState , WaterUsage
 from django.contrib.auth.decorators import login_required
+from .models import DataCollection, SolenoidState , WaterUsage
 from .serializers import DataCollectionSerializer, SolenoidStateSerializer
 
-# Precisa criar a viewset para a API REST
 @api_view(['POST'])
+@token_required  # Aplica o decorator para verificar o token
 def collect_environmental_data(request):
-    if request.method == 'POST':
-        serializer = DataCollectionSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()  # Salva os dados de temperatura, umidade do ar e umidade do solo
-            return Response({"status": "success", "message": "Dados ambientais recebidos com sucesso!"}, status=status.HTTP_201_CREATED)
-        return Response({"status": "error", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    serializer = DataCollectionSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()  # Salva os dados de temperatura, umidade do ar e umidade do solo
+        return Response({"status": "success", "message": "Dados ambientais recebidos com sucesso!"}, status=status.HTTP_201_CREATED)
+    return Response({"status": "error", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@token_required  # Aplica o decorator para verificar o token
 def collect_solenoid_state(request):
-    if request.method == 'POST':
-        serializer = SolenoidStateSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()  # Salva o estado do solenóide
-            return Response({"status": "success", "message": "Estado do solenóide recebido com sucesso!"}, status=status.HTTP_201_CREATED)
-        return Response({"status": "error", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    serializer = SolenoidStateSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()  # Salva o estado do solenóide
+        return Response({"status": "success", "message": "Estado do solenóide recebido com sucesso!"}, status=status.HTTP_201_CREATED)
+    return Response({"status": "error", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 @login_required
 def temperature_chart(request):
