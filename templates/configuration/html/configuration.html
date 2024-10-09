@@ -10,6 +10,44 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script>
+        function copyToken() {
+            var tokenInput = document.getElementById("token");
+
+            // Foco no campo de entrada
+            tokenInput.removeAttribute("disabled"); // Remover o atributo disabled
+            tokenInput.select(); // Selecionar o texto
+            tokenInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+            // Tentar usar a Clipboard API primeiro
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(tokenInput.value)
+                    .then(() => {
+                        var toastEl = document.getElementById('toast');
+                        var toast = new bootstrap.Toast(toastEl);
+                        toast.show(); // Mostrar o Toast
+                    })
+                    .catch(err => {
+                        console.error("Erro ao copiar o token: ", err);
+                    });
+            } else {
+                // Fallback para navegadores que não suportam a Clipboard API
+                try {
+                    var sucesso = document.execCommand('copy');
+                    if (sucesso) {
+                        var toastEl = document.getElementById('toast');
+                        var toast = new bootstrap.Toast(toastEl);
+                        toast.show(); // Mostrar o Toast
+                    } else {
+                        console.error("Falha ao copiar usando execCommand");
+                    }
+                } catch (err) {
+                    console.error("Erro ao copiar o token: ", err);
+                }
+            }
+            tokenInput.setAttribute("disabled", true); // Reabilitar o campo após a cópia
+        }
+    </script>
 </head>
 <body>
     {% include 'partials/html/navbar.html' %}
@@ -18,16 +56,49 @@
         <form method="post">
             {% csrf_token %}
             <div class="row row-style mb-3 d-flex justify-content-between align-items-center">
-                <div class="">
+                <div class="form-group">
                     <label for="flow-rate" class="form-label m-0 text-color-secondary">Taxa de Fluxo (L/min):</label>
-                    <input type="number" step="0.01" id="flow-rate" name="flow_rate" class="form-control w-100" placeholder="{{ flow_rate.rate }}" required>
-                    <p class="text-center text-color-secondary mt-4">Nesse campo, deve ser inserido o valor da vazão em litros de água por minuto.</p>
+                    <input type="number" step="0.01" id="flow-rate" name="flow_rate" class="form-control w-100"
+                        placeholder="{{ flow_rate.rate }}" required>
+                    <p class="text-center text-color-secondary mt-4">Nesse campo, deve ser inserido o valor da vazão em
+                        litros de água por minuto.</p>
                 </div>
                 <div class="col-12 mt-2 mb-2">
-                    <button type="submit" class="btn w-100 btn-primary"><i class="bi bi-save"></i> Atualizar Taxa de Fluxo</button>
+                    <button type="submit" name="update_flow_rate" class="btn w-100 btn-primary"><i
+                            class="bi bi-save"></i> Atualizar Taxa de Fluxo</button>
                 </div>
             </div>
         </form>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row row-style mb-3 d-flex justify-content-between align-items-center">
+                <div class="form-group">
+                    <label for="token" class="form-label m-0 text-color-secondary">Token de Autenticação:</label>
+                    <input type="text" id="token" name="token" class="form-control w-100"
+                        value="{{ configuracao.token }}" disabled>
+                    <p class="text-center text-danger mt-4">Crie um novo token apenas se tiver total confiança no que está fazendo!</p>
+                </div>
+                <div class="col-12 mt-2 mb-2">
+                    <button type="button" onclick="copyToken()" class="btn w-100 btn-primary"><i
+                            class="bi bi-clipboard"></i> Copiar Token</button>
+                    <button type="submit" name="generate_token" class="btn w-100 btn-danger mt-2"><i
+                            class="bi bi-gear-fill"></i> Gerar Novo Token</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="{% static 'icons/favicon.svg' %}" class="rounded toast-icon me-2" alt="...">
+                <strong class="me-auto text-color-primary">Hydric</strong>
+                <small>agora mesmo</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-center">
+                O token foi copiado para a área de transferência!
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
