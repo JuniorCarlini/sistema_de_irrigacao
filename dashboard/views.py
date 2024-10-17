@@ -11,7 +11,7 @@ def dashboard_view(request):
     hora_atual = timezone.now().hour
 
     # Define se é dia ou noite
-    if 6 <= hora_atual < 18:
+    if 10 <= hora_atual < 22:
         imagem = 'icons/sol.png'  # De dia
     else:
         imagem = 'icons/lua.png'  # De noite
@@ -81,7 +81,6 @@ def configuration_view(request):
 
         return redirect('configuration')
         
-
     return render(request, 'configuration/html/configuration.html', {
         'flow_rate': flow_rate_instance,
         'configuracao': configuracao_instance,
