@@ -2,6 +2,12 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 
+class TimeFerti(models.Model):
+    time_ferti_ms = models.PositiveIntegerField(default=0)  # Tempo de operacao da bomba em milisegundos
+
+    def __str__(self):
+        return f"Tempo de operacao da bomba: {self.time_ferti_ms} ms"
+
 class StatusFertil(models.Model):
     start_fertil = models.BooleanField(default=False)
 
