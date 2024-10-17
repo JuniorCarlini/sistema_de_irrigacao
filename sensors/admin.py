@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SolenoidState, DataCollection, FlowRate, WaterUsage, Configuracao, StatusFertil , ConfigFertil, StoricFertil
+from .models import SolenoidState, DataCollection, FlowRate, WaterUsage, Configuracao, StatusFertil , ConfigFertil, StoricFertil, TimeFerti
 
 admin.site.register(SolenoidState)
 admin.site.register(DataCollection)
@@ -9,3 +9,4 @@ admin.site.register(Configuracao)
 admin.site.register(StatusFertil)
 admin.site.register(ConfigFertil)
 admin.site.register(StoricFertil)
+admin.site.register(TimeFerti)
