@@ -1,5 +1,45 @@
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
+
+class StatusFertil(models.Model):
+    start_fertil = models.BooleanField(default=False)
+
+    def atualizar_status(self):
+        # Obtém o último registro de irrigação
+        ultima_irrigacao = StoricFertil.objects.last()
+        if ultima_irrigacao:
+            # Obtém a configuração do tempo fértil (em horas)
+            config_fertil = ConfigFertil.objects.first()
+            if config_fertil:
+                # Calcula o limite de tempo fértil com base nas horas configuradas
+                limite_tempo_fertil = ultima_irrigacao.data_fertil_irrigacao + timedelta(hours=config_fertil.time_fertil)
+                # Verifica se o tempo atual é maior que o limite do tempo fértil
+                self.start_fertil = timezone.now() > limite_tempo_fertil
+            else:
+                # Se não houver configuração de tempo fértil, assume que o status é verdadeiro
+                self.start_fertil = True
+        else:
+            # Se não houver histórico de irrigação, assume que o status é verdadeiro
+            self.start_fertil = True
+        
+        # Salva o status atualizado
+        self.save()
+
+    def __str__(self):
+        return f"Status da fertil: {self.start_fertil}"
+
+class ConfigFertil(models.Model):
+    time_fertil = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"Tempo de fertil: {self.time_fertil} horas"
+
+class StoricFertil(models.Model):
+    data_fertil_irrigacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Irrigação realizada em: {self.data_fertil_irrigacao}"
 
 class FlowRate(models.Model):
     rate = models.FloatField()
