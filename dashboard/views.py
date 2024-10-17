@@ -7,7 +7,20 @@ from sensors.models import WaterUsage, DataCollection, FlowRate, Configuracao, C
 
 @login_required
 def dashboard_view(request):
-    return render(request, 'dashboard/html/dashboard.html')
+    # Obtém a hora atual
+    hora_atual = timezone.now().hour
+
+    # Define se é dia ou noite
+    if 6 <= hora_atual < 18:
+        imagem = 'icons/sol.png'  # De dia
+    else:
+        imagem = 'icons/lua.png'  # De noite
+
+    # Renderiza o template com a variável de contexto
+    context = {
+        'imagem': imagem
+    }
+    return render(request, 'dashboard/html/dashboard.html', context)
 
 @login_required
 def get_water_usage_data(request):
