@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
-from sensors.models import WaterUsage, DataCollection , FlowRate , Configuracao
+from sensors.models import WaterUsage, DataCollection , FlowRate , Configuracao, ConfigFertil
 
 @login_required
 def dashboard_view(request):
@@ -31,8 +31,9 @@ def get_data_collection_data(request):
 
 @login_required
 def configuration_view(request):
-    flow_rate_instance, created = FlowRate.objects.get_or_create(id=1, defaults={'rate': 0.0})
-    configuracao_instance, created = Configuracao.objects.get_or_create(id=1, defaults={'token': ''})
+    flow_rate_instance, _ = FlowRate.objects.get_or_create(id=1, defaults={'rate': 0.0})
+    configuracao_instance, _ = Configuracao.objects.get_or_create(id=1, defaults={'token': ''})
+    config_fertil_instance, _ = ConfigFertil.objects.get_or_create(id=1, defaults={'time_fertil': 1})
 
     if request.method == 'POST':
         # Atualização da taxa de fluxo
@@ -43,14 +44,20 @@ def configuration_view(request):
 
         # Geração de novo token
         if 'generate_token' in request.POST:
-            # Gera um novo token e salva na instância de configuração
-            new_token = secrets.token_hex(16)  # Gera um token aleatório de 32 caracteres hexadecimais
+            new_token = secrets.token_hex(16)
             configuracao_instance.token = new_token
             configuracao_instance.save()
+
+        # Atualização do tempo de fertil
+        if 'time_fertil' in request.POST:
+            new_time_fertil = request.POST.get('time_fertil')
+            config_fertil_instance.time_fertil = int(new_time_fertil)
+            config_fertil_instance.save()
 
         return redirect('configuration')  # Redireciona para evitar o reenvio do formulário
 
     return render(request, 'configuration/html/configuration.html', {
         'flow_rate': flow_rate_instance,
-        'configuracao': configuracao_instance
+        'configuracao': configuracao_instance,
+        'config_fertil': config_fertil_instance
     })
