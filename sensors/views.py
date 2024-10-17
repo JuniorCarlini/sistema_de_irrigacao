@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from django.http import HttpResponseBadRequest
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
-from .models import DataCollection, SolenoidState , WaterUsage, StatusFertil, StoricFertil
-from .serializers import DataCollectionSerializer, SolenoidStateSerializer, StartFertilSerializer, StoricFertilSerializer
+from .models import DataCollection, SolenoidState , WaterUsage, StatusFertil, StoricFertil, TimeFerti
+from .serializers import DataCollectionSerializer, SolenoidStateSerializer, StoricFertilSerializer, CombinedSerializer
 
 @api_view(['POST'])
 @token_required  # Aplica o decorator para verificar o token
@@ -41,15 +41,26 @@ def collect_historico_fertil(request):
 @api_view(['GET'])
 @token_required
 def get_data_fertil_state(request):
+    # Obtém o status fértil
     status_fertil = StatusFertil.objects.first()
 
     if status_fertil:
         # Atualiza o status fértil
         status_fertil.atualizar_status()
+
+        # Obtém o tempo fértil
+        time_ferti = TimeFerti.objects.first()
         
-        # Serializa a instância atualizada
-        serializer = StartFertilSerializer(status_fertil)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if time_ferti:
+            # Cria a resposta combinada
+            combined_data = {
+                'start_fertil': status_fertil.start_fertil,
+                'time_ferti_ms': time_ferti.time_ferti_ms
+            }
+
+            return Response(combined_data, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "message": "TimeFerti não encontrado."}, status=status.HTTP_404_NOT_FOUND)
     else:
         return Response({"status": "error", "message": "StatusFertil não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
