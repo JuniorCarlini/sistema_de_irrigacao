@@ -35,6 +35,5 @@ class CustomUserAdmin(UserAdmin):
     # Ordenação dos resultados no admin
     ordering = ('username',)
 
-
 # Registrar o modelo User personalizado com o CustomUserAdmin
 admin.site.register(User, CustomUserAdmin)
