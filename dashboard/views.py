@@ -5,6 +5,22 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from sensors.models import WaterUsage, DataCollection, FlowRate, Configuracao, ConfigFertil, TimeFerti
 
+def public_dashboard_view(request):
+    # Obtém a hora atual
+    hora_atual = timezone.now().hour
+
+    # Define se é dia ou noite
+    if 10 <= hora_atual < 22:
+        imagem = 'icons/sol.png'  # De dia
+    else:
+        imagem = 'icons/lua.png'  # De noite
+
+    # Renderiza o template com a variável de contexto
+    context = {
+        'imagem': imagem
+    }
+    return render(request, 'dashboard/html/public_dashboard.html', context)
+
 @login_required
 def dashboard_view(request):
     # Obtém a hora atual
@@ -22,22 +38,23 @@ def dashboard_view(request):
     }
     return render(request, 'dashboard/html/dashboard.html', context)
 
-@login_required
 def get_water_usage_data(request):
     water_usages = WaterUsage.objects.all().order_by('-timestamp')[:10]  # Últimos 10 registros
     data = {
-        'labels': [usage.timestamp.strftime('%d-%m-%Y %H:%M') for usage in water_usages],
+        'labels': [
+            timezone.localtime(usage.timestamp).strftime('%d-%m-%Y %H:%M') for usage in water_usages
+        ],
         'water_used': [round(usage.water_used, 2) for usage in water_usages],
     }
     return JsonResponse(data)
 
-@login_required
 def get_data_collection_data(request):
     latest_data = DataCollection.objects.latest('timestamp')
     data = {
         'temperature': round(latest_data.temperature, 2),
         'air_humidity': round(latest_data.air_humidity, 2),
         'soil_humidity': round(latest_data.soil_humidity, 2),
+        'timestamp': timezone.localtime(latest_data.timestamp).strftime('%d-%m-%Y %H:%M')
     }
     return JsonResponse(data)
 
