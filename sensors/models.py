@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils import timezone
 from datetime import timedelta
+from django.utils import timezone
 
 class TimeFerti(models.Model):
     time_ferti_ms = models.PositiveIntegerField(default=0)  # Tempo de operacao da bomba em milisegundos

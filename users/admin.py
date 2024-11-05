@@ -1,6 +1,6 @@
+from .models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
 
 # Classe personalizada para o admin do modelo User
 class CustomUserAdmin(UserAdmin):
